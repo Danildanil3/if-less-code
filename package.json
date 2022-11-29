@@ -1,0 +1,22 @@
+{
+    "name": "if-less-code",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": true
+    },
+    "scripts": {
+        "start": "node src/main.js",
+        "test": "npm run jest",
+        "jest": "jest"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.28.0",
+        "jest": "^29.3.1",
+        "prettier": "^2.8.0"
+    }
+}

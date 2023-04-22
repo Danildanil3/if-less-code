@@ -1,7 +1,7 @@
 // const { describe, it, expect } = require('./minispec')
-const { roundOf, stone, scissors, paper } = require('./game');
+const { roundOf, stone, scissors, paper, lizard, spock } = require('./game');
 
-xdescribe('game with wrong gestures', () => {
+describe('game with wrong gestures', () => {
     it('throw an error for first player', () => {
         expect(() => {
             roundOf('bad', stone);
@@ -39,7 +39,7 @@ describe('game for 2 players', () => {
     });
 });
 
-xdescribe('game for 2 players - extended', () => {
+describe('game for 2 players - extended', () => {
     it('resolves with draw for same gestures', () => {
         expect(roundOf(lizard, lizard)).toBe('draw');
         expect(roundOf(spock, spock)).toBe('draw');
@@ -66,7 +66,7 @@ xdescribe('game for 2 players - extended', () => {
     });
 });
 
-xdescribe('game for 3+ players', () => {
+describe('game for 3+ players', () => {
     describe('resolves with draw', () => {
         it('when all gestures are the same', () => {
             expect(roundOf(stone, stone, stone)).toBe('draw');

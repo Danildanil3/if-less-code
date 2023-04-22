@@ -1,31 +1,55 @@
-const stone = 'stone';
 const scissors = 'scissors';
+const lizard = 'lizard';
+const stone = 'stone';
+const spock = 'spock';
 const paper = 'paper';
 
-function roundOf(p1, p2) {
-    if (p1 === p2) {
+const matchSurrenders = {
+    [scissors]: [paper, lizard],
+    [lizard]:   [spock, paper],
+    [stone]:    [lizard, scissors],
+    [spock]:    [stone, scissors],
+    [paper]:    [stone, spock],
+};
+
+function roundOf(...players) {
+    validatePlayer(players);
+    let winners = resolveWinners(players);
+
+    if (winners.length === 0 || winners.length === players.length) {
         return 'draw';
     } else {
-        switch (`${p1}--${p2}`) {
-            case 'stone--scissors':
-                return '1';
-            case 'scissors--paper':
-                return '1';
-            case 'paper--stone':
-                return '1';
-            case 'stone--paper':
-                return '2';
-            case 'scissors--stone':
-                return '2';
-            case 'paper--scissors':
-                return '2';
-        }
+        return winners.join(' ');
     }
+}
+
+function validatePlayer(players) {
+    players.forEach((gesture, index) => { if (!matchSurrenders[gesture]) throw `Player ${index + 1} used not supported gesture '${gesture}'` });
+}
+
+function resolveWinners(players) {
+    const winners = new Set(players.keys()); // Get players indexes
+    players = [ ...players.entries() ]; // Fix players indexes to gestures
+
+    for (let contenderIndex = 0; contenderIndex < players.length; contenderIndex++) {
+        players.forEach(([opponentIndex]) => { if (contenderBeatsOpponent(players, contenderIndex, opponentIndex)) winners.delete(opponentIndex) });
+    }
+
+    return Array.from(winners, i => i + 1);
+}
+
+function contenderBeatsOpponent(players, contenderIndex, opponentIndex) {
+    let opponentGesture = players[opponentIndex][1];
+    let contenderGesture = players[contenderIndex][1];
+
+    return (opponentIndex !== contenderIndex) && (matchSurrenders[contenderGesture].includes(opponentGesture));
 }
 
 module.exports = {
     roundOf,
-    stone,
     scissors,
+    lizard,
+    spock,
+    stone,
     paper,
 };
